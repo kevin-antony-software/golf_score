@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const List<int> list = <int>[1, 2, 3, 4];
+const List<int> list = <int>[1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 int dropdownValue = list.first;
 
 class ScoreInput extends StatefulWidget {
@@ -18,54 +18,92 @@ class _ScoreInputState extends State<ScoreInput> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Score Input Sheet $width"),
+        backgroundColor: Colors.green,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          height: 50,
-          //width: width * 0.9,
-          color: Colors.pink,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                decoration:
-                    BoxDecoration(border: Border.all(color: Colors.blueAccent)),
-                width: width * 0.75,
-                child: Text(
-                  "Hole 1",
-                  style: TextStyle(fontSize: 30),
+        padding: const EdgeInsets.all(4.0),
+        child: Column(
+          children: [
+            HoleDetails(width: width, holeNum: "Hole 1"),
+            HoleDetails(width: width, holeNum: "Hole 2"),
+            HoleDetails(width: width, holeNum: "Hole 3"),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class HoleDetails extends StatefulWidget {
+  const HoleDetails({
+    Key? key,
+    required this.width,
+    required this.holeNum,
+  }) : super(key: key);
+
+  final String holeNum;
+  final double width;
+
+  @override
+  State<HoleDetails> createState() => _HoleDetailsState();
+}
+
+class _HoleDetailsState extends State<HoleDetails> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(2.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.lime[600],
+          borderRadius: BorderRadius.circular(6),
+          border: Border.all(
+            color: Colors.white,
+            width: 1,
+          ),
+        ),
+        height: 50,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: widget.width * 0.8,
+              child: Text(
+                widget.holeNum,
+                style: TextStyle(fontSize: 30, color: Colors.grey[700]),
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.grey[300],
+                border: Border.all(
+                  color: Colors.grey,
+                  width: 3,
                 ),
               ),
-              Container(
-                child: DropdownButton<int>(
-                  value: dropdownValue,
-                  //icon: const Icon(Icons.arrow_downward),
-                  elevation: 16,
-                  style: const TextStyle(color: Colors.deepPurple),
-                  underline: Container(
-                    height: 2,
-                    color: Colors.deepPurpleAccent,
-                  ),
-                  onChanged: (value) {
-                    // This is called when the user selects an item.
-                    setState(() {
-                      dropdownValue = value!;
-                    });
-                  },
-                  items: list.map<DropdownMenuItem<int>>((int value) {
-                    return DropdownMenuItem<int>(
-                      value: value,
-                      child: Text(
-                        value.toString(),
-                        style: TextStyle(fontSize: 30),
-                      ),
-                    );
-                  }).toList(),
-                ),
-              )
-            ],
-          ),
+              width: widget.width * 0.15,
+              child: DropdownButton<int>(
+                value: dropdownValue,
+                elevation: 16,
+                style: const TextStyle(color: Colors.brown),
+                onChanged: (value) {
+                  setState(() {
+                    dropdownValue = value!;
+                  });
+                },
+                items: list.map<DropdownMenuItem<int>>((int value) {
+                  return DropdownMenuItem<int>(
+                    value: value,
+                    child: Text(
+                      value.toString(),
+                      style: TextStyle(fontSize: 30),
+                    ),
+                  );
+                }).toList(),
+              ),
+            )
+          ],
         ),
       ),
     );
