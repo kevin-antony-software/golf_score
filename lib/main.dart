@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:golf_score/score_input.dart';
+import 'package:golf_score/total_shots.dart';
 import 'package:provider/provider.dart';
 
 void main() {

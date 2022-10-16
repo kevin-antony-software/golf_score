@@ -1,22 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:golf_score/total_shots.dart';
 import 'package:provider/provider.dart';
-
 import 'hole_details.dart';
 
-class TotalShots extends ChangeNotifier {
-  var totalShots = 0;
-
-  int get totalShotsPlayed {
-    return totalShots;
-  }
-
-  add(int shotsInThisHole) {
-    totalShots += shotsInThisHole;
-    notifyListeners();
-  }
-}
-
 final List<String> holesList = <String>[];
+
 int total = 0;
 makeList() {
   for (var i = 1; i < 10; i++) {
@@ -34,7 +22,6 @@ class ScoreInput extends StatefulWidget {
 class _ScoreInputState extends State<ScoreInput> {
   @override
   void initState() {
-    // TODO: implement initState
     makeList();
     print(holesList.last);
     super.initState();
@@ -67,7 +54,7 @@ class _ScoreInputState extends State<ScoreInput> {
                 padding: const EdgeInsets.all(4.0),
                 child: Column(
                   children: holesList
-                      .map((e) => HoleDetails(width: width, holeNum: e))
+                      .map((e) => HoleDetails(width: width, holeNum: e, holeScore: value.eachHoleScore[int.parse(e) -1] ))
                       .toList(),
                 ),
               ),

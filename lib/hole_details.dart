@@ -1,27 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:golf_score/score_input.dart';
+import 'package:golf_score/total_shots.dart';
 import 'package:provider/provider.dart';
 
 const List<int> list = <int>[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-int dropdownValue = list.first;
+
+int dropdownValue = 0;
 
 class HoleDetails extends StatefulWidget {
   const HoleDetails({
     Key? key,
     required this.width,
     required this.holeNum,
+    required this.holeScore,
   }) : super(key: key);
 
   final String holeNum;
   final double width;
+  final int holeScore;
 
   @override
   State<HoleDetails> createState() => _HoleDetailsState();
 }
 
 class _HoleDetailsState extends State<HoleDetails> {
+
   @override
   Widget build(BuildContext context) {
+    dropdownValue = widget.holeScore;
     return Consumer<TotalShots>(
       builder: (BuildContext context, TotalShots totalValue, Widget? child) {
         return Padding(
@@ -64,6 +70,7 @@ class _HoleDetailsState extends State<HoleDetails> {
                       setState(() {
                         dropdownValue = value!;
                         totalValue.add(value);
+                        totalValue.eachHoleResultUpdate(int.parse(widget.holeNum), value);
                       });
                     },
                     items: list.map<DropdownMenuItem<int>>((int value) {
