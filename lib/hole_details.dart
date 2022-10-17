@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:golf_score/score_input.dart';
-import 'package:golf_score/total_shots.dart';
 import 'package:provider/provider.dart';
 
-const List<int> list = <int>[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+import 'each_hole_score.dart';
 
+const List<int> list = <int>[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 int dropdownValue = 0;
 
 class HoleDetails extends StatefulWidget {
@@ -15,7 +14,7 @@ class HoleDetails extends StatefulWidget {
     required this.holeScore,
   }) : super(key: key);
 
-  final String holeNum;
+  final int holeNum;
   final double width;
   final int holeScore;
 
@@ -24,12 +23,11 @@ class HoleDetails extends StatefulWidget {
 }
 
 class _HoleDetailsState extends State<HoleDetails> {
-
   @override
   Widget build(BuildContext context) {
     dropdownValue = widget.holeScore;
-    return Consumer<TotalShots>(
-      builder: (BuildContext context, TotalShots totalValue, Widget? child) {
+    return Consumer<EachHoleScore>(
+      builder: (context, EachHoleScore eachHoleList, child) {
         return Padding(
           padding: const EdgeInsets.all(2.0),
           child: Container(
@@ -48,7 +46,7 @@ class _HoleDetailsState extends State<HoleDetails> {
                 Container(
                   width: widget.width * 0.8,
                   child: Text(
-                    widget.holeNum,
+                    "Hole ${widget.holeNum}",
                     style: TextStyle(fontSize: 30, color: Colors.grey[700]),
                   ),
                 ),
@@ -69,8 +67,9 @@ class _HoleDetailsState extends State<HoleDetails> {
                     onChanged: (value) {
                       setState(() {
                         dropdownValue = value!;
-                        totalValue.add(value);
-                        totalValue.eachHoleResultUpdate(int.parse(widget.holeNum), value);
+                        eachHoleList.eachHoleResultUpdate(
+                            widget.holeNum, value);
+                        //totalValue.eachHoleResultUpdate(int.parse(widget.holeNum), value);
                       });
                     },
                     items: list.map<DropdownMenuItem<int>>((int value) {

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:golf_score/score_input.dart';
-import 'package:golf_score/total_shots.dart';
 import 'package:provider/provider.dart';
+
+import 'each_hole_score.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) {
-        return TotalShots();
+        return EachHoleScore();
       },
       child: MaterialApp(
         title: 'Flutter Demo',
